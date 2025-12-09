@@ -8,3 +8,4 @@
 rm-*.ndjson
 tm.ndjson
 trace.ndjson
+config.py
