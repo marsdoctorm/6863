@@ -1,12 +1,18 @@
 import os
 import argparse
+import platform
 from subprocess import Popen
+from config import TLA_DIR_PATH
 
 # ===== Path to TLA+ jars =====
-tla_dir = "/opt/tla-nightly/toolbox"
+# tla_dir = "/opt/tla-nightly/toolbox"
+tla_dir = TLA_DIR_PATH
 tla_jar = os.path.join(tla_dir, "tla2tools.jar")
 community_modules_jar = os.path.join(tla_dir, "CommunityModules-deps.jar")
-tla_cp = f"{tla_jar}:{community_modules_jar}"
+if platform.system() == "Windows":
+    tla_cp = f"{tla_jar};{community_modules_jar}"
+else:
+    tla_cp = f"{tla_jar}:{community_modules_jar}"
 
 
 def run_tla(trace_spec, trace="trace.ndjson", config="conf.ndjson", dfs=False):
@@ -70,5 +76,3 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     run_tla(args.spec, args.trace, args.config, args.dfs)
-
-

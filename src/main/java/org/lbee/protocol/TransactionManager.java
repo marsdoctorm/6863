@@ -77,7 +77,8 @@ public class TransactionManager extends Manager {
         // (not necessary)
         // traceState.update("init");
         // traceTmPrepared.clear();
-        // shouldn't log initial state for variables potentially modified by several processes
+        // shouldn't log initial state for variables potentially modified by several
+        // processes
         // traceMessages.clear();
         // tracer.log();
         // keep receiving messages until all RMs are prepared or they take too long to
@@ -106,9 +107,12 @@ public class TransactionManager extends Manager {
 
             if (checkAllPrepared()) {
                 // alt1: the trace is still consistent (but not complete) even if the TM doesn't
-                // send the last commit message (comment out the next line to get this behaviour)
-                // alt2: if using handleMessageAndCommit, the commit is already done with the last 
-                // message and thus not necessary here (comment out the next line to get this behaviour)
+                // send the last commit message (comment out the next line to get this
+                // behaviour)
+                // alt2: if using handleMessageAndCommit, the commit is already done with the
+                // last
+                // message and thus not necessary here (comment out the next line to get this
+                // behaviour)
                 this.commit();
                 System.out.println("-- TM  shutdown");
                 return;
@@ -129,7 +133,7 @@ public class TransactionManager extends Manager {
                 this.preparedRMs.add(preparedRM);
                 // trace the state change
                 traceTmPrepared.add(preparedRM); // the RM is added to the set of prepared RMs
-                //traceState.unchanged(); // explicit log of UNCHANGED variable
+                // traceState.unchanged(); // explicit log of UNCHANGED variable
                 tracer.log("TMRcvPrepared", preparedRM); // log corresponding event
                 // tracer.log();
             }
@@ -150,10 +154,12 @@ public class TransactionManager extends Manager {
             // if the message is from an RM managed by the TM
             if (resourceManagers.contains(preparedRM)) {
                 this.preparedRMs.add(preparedRM);
-                if (this.preparedRMs.size() >= this.resourceManagers.size()) { // if last expected message received (all RMs are prepared) commit
+                if (this.preparedRMs.size() >= this.resourceManagers.size()) { // if last expected message received (all
+                                                                               // RMs are prepared) commit
                     // trace the state change even if it's the last message expected from RMs
                     // (if not traced, action composition should be used in trace validation)
-                    // traceTmPrepared.add(preparedRM); // the RM is added to the set of prepared RMs
+                    // traceTmPrepared.add(preparedRM); // the RM is added to the set of prepared
+                    // RMs
                     // tracer.log("TMRcvPrepared", preparedRM); // log corresponding event
                     // tracer.log();
                     this.commit();

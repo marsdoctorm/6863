@@ -1,5 +1,8 @@
+import contextlib
 import os
 import argparse
+import platform
+import subprocess
 import ndjson
 import time
 import signal
@@ -7,34 +10,65 @@ from subprocess import Popen
 
 jar_name = "TwoPhase-1.1-noabort-demo-jar-with-dependencies.jar"
 
+
 def read_json(filename):
     with open(filename) as f:
         return ndjson.load(f)
 
+
+def free_ports():
+    ports = [6869, 6666]
+    for port in ports:
+        if platform.system() == "Windows":
+            with contextlib.suppress(subprocess.CalledProcessError):
+                output = subprocess.check_output(
+                    f"netstat -ano | findstr :{port}", shell=True
+                ).decode()
+                for line in output.splitlines():
+                    if "LISTENING" in line:
+                        pid = line.strip().split()[-1]
+                        subprocess.run(
+                            f"taskkill /F /PID {pid}",
+                            shell=True,
+                            stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL,
+                        )
+        else:
+            os.system(f"lsof -ti:{port} | xargs kill -9 >/dev/null 2>&1")
+
+
 def run(RMs, TM):
+    free_ports()
     print("--- Run server ---")
-    server_process = Popen([
-        "java",
-        "-cp",
-        f"target/{jar_name}",
-        "org.lbee.network.Server",
-        "6869", "unordered"])
+    server_process = Popen(
+        [
+            "java",
+            "-cp",
+            f"target/{jar_name}",
+            "org.lbee.network.Server",
+            "6869",
+            "unordered",
+        ]
+    )
 
     print("--- Run server ---")
-    clock_process = Popen([
-        "java",
-        "-cp",
-        f"target/{jar_name}",
-        "org.lbee.instrumentation.clock.ServerClock",
-        "6666"])
+    clock_process = Popen(
+        [
+            "java",
+            "-cp",
+            f"target/{jar_name}",
+            "org.lbee.instrumentation.clock.ServerClock",
+            "6666",
+        ]
+    )
 
-    # Wait the server to run, if not some manager might start 
+    # Wait the server to run, if not some manager might start
     # running before the server, leading to an error
     # This behavior might be interesting for trace validation
     time.sleep(2)
 
     print("--- Run TM client ---")
-    # set initialisation duration long enough to make sure all 
+    # set initialisation duration long enough to make sure all
     # RMs are working and already sent the prepare message
     # (if we try to log init state shared by RMs and TM, like messages,
     # this results in a false negative)
@@ -44,7 +78,11 @@ def run(RMs, TM):
         "-cp",
         f"target/{jar_name}",
         "org.lbee.Client",
-        "localhost", "6869", "tm", f"{TM}"]
+        "localhost",
+        "6869",
+        "tm",
+        f"{TM}",
+    ]
     for rm in RMs:
         args += [f"{rm}"]
     args += [f"{duration}"]
@@ -59,7 +97,13 @@ def run(RMs, TM):
             "-cp",
             f"target/{jar_name}",
             "org.lbee.Client",
-            "localhost", "6869", "rm", f"{rm}", f"{TM}", f"{duration}"]
+            "localhost",
+            "6869",
+            "rm",
+            f"{rm}",
+            f"{TM}",
+            f"{duration}",
+        ]
         rm_process = Popen(args)
         # if duration is the same for all RMs the bug (in TM) has much less chances to appear
         # can keep the same duration for the benchmarks when the bug is fixed
@@ -76,14 +120,20 @@ def run(RMs, TM):
     for rm_process in rm_processes:
         rm_process.terminate()
     # Kill server
-    os.kill(server_process.pid, signal.SIGINT)
-    os.kill(clock_process.pid, signal.SIGINT)
+    if platform.system() == "Windows":
+        server_process.terminate()
+        clock_process.terminate()
+    else:
+        os.kill(server_process.pid, signal.SIGINT)
+        os.kill(clock_process.pid, signal.SIGINT)
+
 
 if __name__ == "__main__":
     # Read program args
     parser = argparse.ArgumentParser(description="")
-    parser.add_argument('--config', type=str, required=False,
-                        default="conf.ndjson", help="Config file")
+    parser.add_argument(
+        "--config", type=str, required=False, default="conf.ndjson", help="Config file"
+    )
     args = parser.parse_args()
     # Read config and run
     config = read_json(args.config)

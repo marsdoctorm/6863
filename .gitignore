@@ -1,0 +1,7 @@
+*.pyc
+*.dot
+*.fp
+*.st
+*.jar
+*.class
+*.lst
