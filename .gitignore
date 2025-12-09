@@ -1,0 +1,11 @@
+*.pyc
+*.dot
+*.fp
+*.st
+*.jar
+*.class
+*.lst
+rm-*.ndjson
+tm.ndjson
+trace.ndjson
+config.py
