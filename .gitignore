@@ -5,3 +5,6 @@
 *.jar
 *.class
 *.lst
+rm-*.ndjson
+tm.ndjson
+trace.ndjson

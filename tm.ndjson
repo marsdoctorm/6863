@@ -1,3 +1,0 @@
-{"clock":62,"tmPrepared":[{"op":"AddElement","path":[],"args":["rm-0"]}],"event":"TMRcvPrepared","desc":"rm-0","logger":"620436e6-84f6-41d6-a240-6751f36ff642"}
-{"clock":65,"tmPrepared":[{"op":"AddElement","path":[],"args":["rm-0"]}],"event":"TMRcvPrepared","desc":"rm-0","logger":"620436e6-84f6-41d6-a240-6751f36ff642"}
-{"clock":66,"msgs":[{"op":"AddElement","path":[],"args":[{"type":"Abort"}]}],"tmState":[{"op":"Update","path":[],"args":["done"]}],"event":"TMAbort","logger":"620436e6-84f6-41d6-a240-6751f36ff642"}
