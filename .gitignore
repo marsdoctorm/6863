@@ -6,4 +6,14 @@
 *.class
 *.lst
 config.py
-*.ndjson
+# Generated traces
+trace*.ndjson
+*.cloudflare.ndjson
+
+# Keep checked-in configs
+!conf-cloudflare.ndjson
+!conf-cloudflare-small.ndjson
+
+# Generated clocks
+*.clock
+!cloudflare.clock
