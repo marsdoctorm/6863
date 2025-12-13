@@ -9,3 +9,8 @@ config.py
 *.ndjson
 
 .idea/
+
+# --- TLC generated (Amazon v3) ---
+amazon/spec/v3/*_TTrace_*.tla
+amazon/spec/v3/*_TTrace_*.bin
+amazon/spec/v3/states/
