@@ -1,0 +1,3 @@
+usage: tla_trace_validation.py [-h] [--trace TRACE] [--config CONFIG] [--dfs]
+                               spec
+tla_trace_validation.py: error: the following arguments are required: spec
