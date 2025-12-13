@@ -7,3 +7,5 @@
 *.lst
 config.py
 *.ndjson
+
+.idea/
