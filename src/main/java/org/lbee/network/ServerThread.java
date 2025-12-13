@@ -22,41 +22,28 @@ public class ServerThread extends Thread {
 
     @Override
     public void run() {
-        try {
-            try (socket) {
-                InputStream input = socket.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-                OutputStream output = socket.getOutputStream();
-                PrintWriter writer = new PrintWriter(output, true);
-                String text;
-                do {
-                    text = reader.readLine();
-                    
-                    // Message send
-                    if (text.startsWith("s:")) {
-                        // Get message data
-                        String messageData = text.substring(2, text.length());
-                        // Create message object from data
-                        Message message = new Message(messageData.split(";"));
-                        // Put message on queue
-                        networkMock.put(message);
-                        writer.println("ack");
-                        System.out.println("   Message sent: "+message);
-                    }
-                    // Message collect (receive)
-                    else if (text.startsWith("r:")) {
-                        String dest = text.substring(2, text.length());
-                        // Search message
-                        Message message = networkMock.take(dest);
-                        // Send message to client that request it
-                        if (message != null)
-                            writer.println(message.toString());
-                        else
-                            writer.println("null");
-                    }
-                } while (!text.equals("bye"));
-                // System.out.println("A client quit.");
-            }
+        try (socket) {
+            InputStream input = socket.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+            OutputStream output = socket.getOutputStream();
+            PrintWriter writer = new PrintWriter(output, true);
+
+            String text;
+            do {
+                text = reader.readLine();
+
+                if (text.startsWith("s:")) {
+                    String messageData = text.substring(2);
+                    Message message = new Message(messageData.split(";"));
+                    networkMock.put(message);
+                    writer.println("ack");
+                    System.out.println("   Message sent: " + message);
+                } else if (text.startsWith("r:")) {
+                    String dest = text.substring(2);
+                    Message message = networkMock.take(dest);
+                    writer.println(message != null ? message.toString() : "null");
+                }
+            } while (!text.equals("bye"));
         } catch (IOException ex) {
             System.out.println("Server exception: " + ex.getMessage());
         }
