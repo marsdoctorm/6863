@@ -14,3 +14,9 @@ config.py
 amazon/spec/v3/*_TTrace_*.tla
 amazon/spec/v3/*_TTrace_*.bin
 amazon/spec/v3/states/
+
+# ---- TLC generated (do NOT commit) ----
+amazon/spec/**/states/
+amazon/spec/**/*_TTrace_*.tla
+amazon/spec/**/*_TTrace_*.bin
+*.bin
