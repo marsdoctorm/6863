@@ -43,3 +43,52 @@ Apache Maven (for building the Java project).
 Python 3.8+ (for the validation scripts).
 
 TLA+ Tools: Ensure the TLA+ command-line tools (tla2tools.jar) are accessible or configured within the script paths.
+
+
+Setup & Installation
+Clone the repository:
+
+Bash
+
+git clone <repository-url>
+cd <repository-folder>
+Set up the Python environment: It is recommended to use a virtual environment.
+
+Bash
+
+python -m venv .venv
+source .venv/bin/activate  # On Windows use: .venv\Scripts\activate
+pip install -r requirements.txt  # If a requirements file exists, otherwise install dependencies manually
+Build the Java Implementation:
+
+Bash
+
+mvn clean package
+Usage
+1. Configuration
+Ensure that the amazon/spec/v3 folder contains the correct .tla and .cfg files for the v3 model.
+
+2. Running the Validation Pipeline
+To execute the full verification cycle (Run Implementation -> Generate Trace -> Validate against Spec), run the pipeline script:
+
+Bash
+
+# Note: Ensure the script points to the Amazon v3 spec path
+python cloudflare_validation_pipeline.py
+(Note: Although named cloudflare_... due to the base template, this script has been configured to validate the Amazon v3 specification.)
+
+3. Interpreting Results
+Success: If the implementation conforms to the spec, the script will output a success message indicating no violations were found.
+
+Failure: Check _validate.log for details on where the trace diverged from the allowed TLA+ states.
+
+Version Details (v3)
+The v3 specification introduced the following improvements:
+
+Refined state transitions for the commit phase.
+
+Handling of specific edge cases in the Two-Phase protocol.
+
+
+
+Acknowledgments
