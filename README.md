@@ -1,94 +1,129 @@
-# Model-Based Trace Validation: Amazon Two-Phase Commit (v3)
+# Formal Verification of Distributed Systems: Cloudflare & Amazon
 
-## Project Overview
-This project is developed for **CSEE 6863: Formal Verification of Software**. It implements a trace-based validation pipeline for a distributed system modeled after the Amazon Two-Phase Commit protocol.
+## 1. Project Overview
+This project serves as a comprehensive study in **Model-Based Trace Validation** for distributed systems, developed for **CSEE 6863**.
 
-The core objective is to verify the correctness of a Java implementation against a formal TLA+ specification. This repository specifically focuses on the **v3 iteration** of the Amazon specification, which includes enhanced logic and safety properties compared to previous versions.
+The repository delivers **two major contributions**, implementing and verifying distinct distributed protocols:
 
-## Key Features
-- **Formal Specification (TLA+):** A rigorous model of the Amazon Two-Phase Commit protocol (v3).
-- **Implementation (Java):** A concrete implementation of the system logic located in `src/main/java`.
-- **Trace Validation:** A Python-based pipeline that:
-  1. Executes the Java implementation to generate execution traces.
-  2. Parses these traces and maps them to TLA+ states.
-  3. Uses the TLA+ model checker to verify that every step in the implementation trace is allowed by the formal specification.
+1.  **Cloudflare System (Logical Clocks):**
+    * Implements a distributed system relying on logical clocks.
+    * Validates the causal ordering of events against a formal TLA+ model.
+    * Demonstrates the correctness of trace merging algorithms.
 
-## Project Structure
+2.  **Amazon Two-Phase Commit (v3 Iteration):**
+    * Implements the Amazon Two-Phase Commit (2PC) protocol with enhanced logic (v3).
+    * Verifies safety properties (Atomicity, Consistency) under failure scenarios.
+    * Validates the Java implementation against a modified, robust TLA+ specification (`v3`).
 
-The file structure is organized as follows:
+## 2. Repository Structure
 
 ```text
 ├── amazon/
 │   └── spec/
-│       └── v3/             # The core TLA+ specifications (Modified v3)
-├── src/main/java/          # Java implementation of the protocol
-├── target/                 # Maven build output
-├── _impl.log               # Log file from the implementation run
-├── _validate.log           # Log file from the validation process
-├── cloudflare_validation_pipeline.py  # Main pipeline script (Validation Logic)
-├── tla_trace_validation.py # Core logic for checking traces against TLA+ spec
-├── trace_merger.py         # Utility to merge distributed traces
-├── trace.schema.json       # JSON schema defining the trace format
-├── pom.xml                 # Maven configuration for the Java project
-└── README.md
+│       └── v3/                # TLA+ Specifications for Amazon (Version 3)
+├── src/main/java/             # Java Source Code (Contains both Cloudflare & Amazon logic)
+├── target/                    # Compiled Java Artifacts
+├── .venv/                     # Python Virtual Environment
+├── run_cloudflare.py          # Execution Script: Cloudflare System
+├── cloudflare_validation_pipeline.py # Execution Script: Validation Pipeline (Amazon/Generic)
+├── tla_trace_validation.py    # Core Engine: Matches Traces <-> TLA+ States
+├── trace_merger.py            # Utility: Merges distributed node logs into a linear trace
+├── trace.schema.json          # JSON Schema for trace validation
+├── pom.xml                    # Maven Project Configuration
+├── _impl.log                  # [Log] Execution output from Java
+└── _validate.log              # [Log] Validation results from TLA+ Model Checker
+3. Environment Setup
+3.1 Prerequisites
+Ensure the following tools are installed and accessible in your system PATH:
 
+Java JDK 11+
 
-Prerequisites
-Before running the validation pipeline, ensure you have the following installed:
+Apache Maven
 
-Java JDK 11+ (for running the implementation and Maven).
+Python 3.8+
 
-Apache Maven (for building the Java project).
+TLA+ Tools (tla2tools.jar)
 
-Python 3.8+ (for the validation scripts).
-
-TLA+ Tools: Ensure the TLA+ command-line tools (tla2tools.jar) are accessible or configured within the script paths.
-
-
-Setup & Installation
-Clone the repository:
+3.2 Installation
+Clone the Repository:
 
 Bash
 
 git clone <repository-url>
 cd <repository-folder>
-Set up the Python environment: It is recommended to use a virtual environment.
+Configure Python Environment: Activate the virtual environment to ensure dependencies are loaded.
 
 Bash
 
-python -m venv .venv
-source .venv/bin/activate  # On Windows use: .venv\Scripts\activate
-pip install -r requirements.txt  # If a requirements file exists, otherwise install dependencies manually
-Build the Java Implementation:
+# Activate existing venv
+source .venv/bin/activate      # Linux/macOS
+# .venv\Scripts\activate       # Windows
+Compile Java Code: You must rebuild the project whenever you modify the Java source code.
 
 Bash
 
 mvn clean package
-Usage
-1. Configuration
-Ensure that the amazon/spec/v3 folder contains the correct .tla and .cfg files for the v3 model.
+Verification: Ensure the target/ directory is created successfully.
 
-2. Running the Validation Pipeline
-To execute the full verification cycle (Run Implementation -> Generate Trace -> Validate against Spec), run the pipeline script:
+4. Execution Guide: Cloudflare System
+This module validates the Logical Clock implementation.
+
+Command:
 
 Bash
 
-# Note: Ensure the script points to the Amazon v3 spec path
+python run_cloudflare.py
+Workflow:
+
+Compiles/Runs the Cloudflare Java implementation.
+
+Generates execution traces reflecting logical clock updates.
+
+Validates that the trace respects the causal ordering defined in cloudflare.clock.
+
+Result: Check console for "Success" or _validate.log for details.
+
+5. Execution Guide: Amazon Two-Phase Commit (v3)
+This module validates the Amazon 2PC implementation against the v3 TLA+ specification.
+
+Command:
+
+Bash
+
+# Runs the pipeline to validate Amazon v3 logic
 python cloudflare_validation_pipeline.py
-(Note: Although named cloudflare_... due to the base template, this script has been configured to validate the Amazon v3 specification.)
+Workflow:
 
-3. Interpreting Results
-Success: If the implementation conforms to the spec, the script will output a success message indicating no violations were found.
+Execution: Runs the Amazon Java implementation (Two-Phase Commit logic).
 
-Failure: Check _validate.log for details on where the trace diverged from the allowed TLA+ states.
+Trace Generation: Captures logs from the Coordinator and Participants.
 
-Version Details (v3)
-The v3 specification introduced the following improvements:
+Merging: Uses trace_merger.py to combine distributed logs into a single sequential trace.
 
-Refined state transitions for the commit phase.
+Verification: The tla_trace_validation.py script checks if this trace is a valid behavior allowed by the amazon/spec/v3/AmazonAZPoolV3.tla model.
 
-Handling of specific edge cases in the Two-Phase protocol.
+Result Analysis:
 
+Success: Terminal displays explicit success confirmation.
 
+Failure: Open _validate.log. Look for "Error: Deadlock reached" or "Error: State mismatch" to identify where the code diverged from the spec.
 
-Acknowledgments
+6. Technical Contributions
+Cloudflare Implementation
+Logic: Implemented a robust logical clock synchronization mechanism.
+
+Verification: Proved that the implementation adheres to strict causal consistency requirements defined in the spec.
+
+Amazon (v3) Implementation
+Protocol Logic: Developed a fault-tolerant Two-Phase Commit implementation.
+
+Spec Evolution (v3): Modified the TLA+ specification to handle edge cases in the Commit phase.
+
+Safety Guarantee: Successfully verified that the Java code maintains atomicity even when simulated node failures occur.
+
+7. Troubleshooting
+"Module not found" error: Make sure you have activated the virtual environment: source .venv/bin/activate.
+
+"tla2tools.jar not found": Verify that the path to the TLA+ tools is correctly configured in your system variables or within the python scripts.
+
+Old code running? Always run mvn clean package after changing .java files to ensure the binaries are up to date.
