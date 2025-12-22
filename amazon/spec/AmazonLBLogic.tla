@@ -2,8 +2,7 @@
 EXTENDS AmazonConstants, AmazonUtils
 
 (***************************************************************************)
-(* LOAD BALANCER LOGIC MODULE                                              *)
-(* Implements Least Connections with health/capacity filtering.            *)
+(     *)
 (***************************************************************************)
 
 (* Helper: Get the other AZ *)
@@ -39,3 +38,4 @@ ComputeRoute(reqOrigin, pool, azMap, cbMap, loadMap, statusMap, capMap) ==
         ELSE NoInstance
 
 =============================================================================
+
