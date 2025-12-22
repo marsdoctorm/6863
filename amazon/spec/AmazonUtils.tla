@@ -2,8 +2,7 @@
 EXTENDS Naturals, FiniteSets, Sequences
 
 (***************************************************************************)
-(* UTILITY LIBRARY                                                         *)
-(* Recursive functions fixed for TLC compatibility.                        *)
+(*             *)
 (***************************************************************************)
 
 (* Find the minimum value in a set of numbers *)
@@ -26,3 +25,4 @@ Sum(F(_), S) == SumSet(F, S)
 Filter(S, P(_)) == {x \in S : P(x)}
 
 =============================================================================
+
