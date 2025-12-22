@@ -1,10 +1,8 @@
 ---- MODULE AmazonV3_System ----
 (***************************************************************************)
-(* AMAZON V3 ADVANCED: CHAOS SYSTEM MODEL (FULL SCORE VERSION)             *)
+(* AMAZON V3 ADVANCED: CHAOS SYSTEM MODEL (F          *)
 (* Features:                                                               *)
-(* 1. Safety: Robust Invariants (TypeOK)                                   *)
-(* 2. Liveness: Temporal Properties (RequestsEventuallyFinish)             *)
-(* 3. Fairness: Weak Fairness on System Actions                            *)
+(* 1.                      *)
 (***************************************************************************)
 EXTENDS AmazonConstants, AmazonUtils, AmazonCBLogic, AmazonLBLogic, TLC
 
@@ -105,3 +103,4 @@ Spec == Init /\ [][Next]_vars
                   WF_vars(Schedule(r)) /\ WF_vars(Complete(r)) /\ WF_vars(Fail(r))
 
 =============================================================================
+
