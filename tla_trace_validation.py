@@ -16,12 +16,10 @@ else:
 
 
 def run_tla(trace_spec, trace="trace.ndjson", config="conf.ndjson", dfs=False):
-    # 让 TLA+ 的 Json/IOUtils 模块知道 trace/config 在哪
     os.environ["TRACE_PATH"] = trace
     os.environ["CONFIG_PATH"] = config
 
     if dfs:
-        # 深度优先：通过队列类型切换
         cmd = [
             "java",
             "-XX:+UseParallelGC",
@@ -32,7 +30,6 @@ def run_tla(trace_spec, trace="trace.ndjson", config="conf.ndjson", dfs=False):
             trace_spec,
         ]
     else:
-        # 默认：宽度优先 + 生成 dot 图
         cmd = [
             "java",
             "-XX:+UseParallelGC",

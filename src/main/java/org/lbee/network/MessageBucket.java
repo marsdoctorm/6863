@@ -7,11 +7,10 @@ import java.util.function.Supplier;
 import org.lbee.protocol.Message;
 
 /**
- * Bucket where processes can pick some received messages
+ * Message routing bucket for multiple recipients
  */
 public class MessageBucket<TMessageBox extends MessageBox> {
 
-    // Map of message boxes by recipient
     private final ConcurrentHashMap<String, TMessageBox> messageBoxes;
     private final Supplier<TMessageBox> messageBoxCtor;
 
@@ -20,31 +19,13 @@ public class MessageBucket<TMessageBox extends MessageBox> {
         this.messageBoxCtor = Objects.requireNonNull(messageBoxCtor);
     }
 
-    /**
-     * Send a message to another process
-     * @param message Message to send
-     */
     public synchronized void put(Message message) {
-        if (!this.messageBoxes.containsKey(message.getTo()))
-            this.messageBoxes.put(message.getTo(), messageBoxCtor.get());
-
-        this.messageBoxes.get(message.getTo()).put(message);
+        messageBoxes.computeIfAbsent(message.getTo(), k -> messageBoxCtor.get())
+                .put(message);
     }
 
-    /**
-     * Take message of some addressee process (if any)
-     * @param recipientName Recipient process name
-     * @return Received message
-     */
     public synchronized Message take(String recipientName) {
-        // Get message queue of recipient
-        MessageBox messageBox = this.messageBoxes.get(recipientName);
-        // No message, return null
-        if (messageBox == null) {
-            return null;
-        }
-
-        return messageBox.take();
+        MessageBox messageBox = messageBoxes.get(recipientName);
+        return messageBox != null ? messageBox.take() : null;
     }
-
 }

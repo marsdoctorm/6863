@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """
 Cloudflare Configuration System - Trace Validation Pipeline
-
-Similar to trace_validation_pipeline.py but for Cloudflare system.
 Performs: build -> run -> merge traces -> validate with TLC
 """
 

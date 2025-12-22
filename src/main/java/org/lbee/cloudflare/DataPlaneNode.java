@@ -136,7 +136,7 @@ public class DataPlaneNode {
 
             // Check if update fails (random failure)
             if (random.nextDouble() < FAILURE_PROBABILITY) {
-                System.out.println("[" + nodeId + "] ❌ Configuration update FAILED!");
+                System.out.println("[" + nodeId + "] Configuration update FAILED!");
                 state = NodeState.FAILED;
                 logState("NodeFailUpdate");
                 sendFail("Random failure during update");
@@ -207,7 +207,7 @@ public class DataPlaneNode {
     private void checkConfigurationValidity(ConfigVersion oldConfig, ConfigVersion newConfig) {
         // Check 1: Does the rule block all traffic?
         if (newConfig.getRule().createsDeadZone()) {
-            System.out.println("[" + nodeId + "] ⚠️  Configuration creates DEAD ZONE - blocking all traffic!");
+            System.out.println("[" + nodeId + "] Configuration creates DEAD ZONE - blocking all traffic!");
             isTrafficBlocked = true;
             return;
         }
@@ -215,7 +215,7 @@ public class DataPlaneNode {
         // Check 2: Is new config compatible with what other nodes might have?
         // This simulates version skew issues (Failure Mode B)
         if (!newConfig.isCompatibleWith(oldConfig)) {
-            System.out.println("[" + nodeId + "] ⚠️  Configuration incompatible with previous version!");
+            System.out.println("[" + nodeId + "] Configuration incompatible with previous version!");
             System.out.println("[" + nodeId + "] This may cause routing issues across the network");
             isTrafficBlocked = true;
         }

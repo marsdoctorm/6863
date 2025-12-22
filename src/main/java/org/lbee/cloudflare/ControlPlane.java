@@ -79,14 +79,14 @@ public class ControlPlane {
 
             // Phase 2: Deploy problematic configuration (simulates Cloudflare incident)
             ConfigVersion v3 = createConfigVersion("v3", ConfigRule.RuleType.ROUTING_RULE, true);
-            System.out.println("\n[CP] ⚠️  Deploying potentially problematic configuration v3...");
+            System.out.println("\n[CP] Deploying potentially problematic configuration v3...");
             deployConfiguration(v3);
 
             Thread.sleep(1000);
 
             // Phase 3: Detect issues and attempt rollback
             if (trafficBlocked) {
-                System.out.println("\n[CP] 🚨 Traffic blocked detected! Initiating rollback...");
+                System.out.println("\n[CP] Traffic blocked detected! Initiating rollback...");
                 rollbackConfiguration();
             }
 
@@ -146,7 +146,7 @@ public class ControlPlane {
      */
     private void rollbackConfiguration() throws IOException {
         if (!canRollback()) {
-            System.out.println("[CP] ❌ Rollback BLOCKED! Control plane or routing is compromised.");
+            System.out.println("[CP] Rollback BLOCKED! Control plane or routing is compromised.");
             state = State.BLOCKED;
             logState("ControlPlaneBlocked");
             return;
@@ -178,7 +178,7 @@ public class ControlPlane {
         waitForAcknowledgments();
 
         if (deployedNodes.size() == nodes.size()) {
-            System.out.println("[CP] ✅ Rollback completed successfully");
+            System.out.println("[CP] Rollback completed successfully");
             trafficBlocked = false;
             state = State.IDLE;
         }
@@ -195,7 +195,7 @@ public class ControlPlane {
 
         while (deployedNodes.size() < nodes.size()) {
             if (System.currentTimeMillis() - startTime > timeout) {
-                System.out.println("[CP] ⏰ Timeout waiting for acknowledgments");
+                System.out.println("[CP] Timeout waiting for acknowledgments");
                 break;
             }
 
@@ -211,11 +211,11 @@ public class ControlPlane {
         }
 
         if (deployedNodes.size() == nodes.size()) {
-            System.out.println("[CP] ✅ All nodes updated successfully");
+            System.out.println("[CP] All nodes updated successfully");
             state = State.IDLE;
             logState("CPFinishDeployment");
         } else {
-            System.out.println("[CP] ⚠️  Only " + deployedNodes.size() + "/" + nodes.size() + " nodes updated");
+            System.out.println("[CP] Only " + deployedNodes.size() + "/" + nodes.size() + " nodes updated");
         }
     }
 

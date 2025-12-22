@@ -66,7 +66,7 @@ public class CloudflareClient {
                         nodes.add(nodeName.trim());
                     }
 
-                    System.out.println("🌐 Starting Control Plane: " + name);
+                    System.out.println("Starting Control Plane: " + name);
                     System.out.println("   Managing nodes: " + nodes);
 
                     ControlPlane controlPlane = new ControlPlane(
@@ -85,7 +85,7 @@ public class CloudflareClient {
                 case "dataplane":
                     String cpName = otherNames.trim();
 
-                    System.out.println("📍 Starting Data Plane Node: " + name);
+                    System.out.println("Starting Data Plane Node: " + name);
                     System.out.println("   Control Plane: " + cpName);
 
                     DataPlaneNode node = new DataPlaneNode(
