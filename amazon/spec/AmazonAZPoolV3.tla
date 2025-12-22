@@ -1,6 +1,6 @@
 ---- MODULE AmazonV3_System ----
 (***************************************************************************)
-(* AMAZON V3 ADVANCED: CHAOS SYSTEM MODEL (FULL SCORE VERSION)             *)
+(* AMAZON V3           *)
 (* Features:                                                               *)
 (* 1. Safety: Robust Invariants (TypeOK)                                   *)
 (* 2. Liveness: Temporal Properties (RequestsEventuallyFinish)             *)
@@ -103,3 +103,4 @@ Next ==
 Spec == Init /\ [][Next]_vars
              /\ \A r \in REQS :
                   WF_vars(Schedule(r)) /\ WF_vars(Complete(r)) /\ WF_vars(Fail(r))
+
