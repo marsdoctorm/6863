@@ -1,0 +1,37 @@
+RM rm-3 WORKING - 70 ms
+RM rm-1 WORKING - 30 ms
+RM rm-0 WORKING - 10 ms
+RM rm-2 WORKING - 50 ms
+   Message sent: rm-0;tm;Prepared;0
+RM rm-0 sent Prepared
+   Message sent: rm-1;tm;Prepared;0
+RM rm-1 sent Prepared
+-- RM rm-0 received TIMEOUT 
+   Message sent: rm-0;tm;Prepared;0
+RM rm-0 sent Prepared
+   Message sent: rm-2;tm;Prepared;0
+RM rm-2 sent Prepared
+-- RM rm-0 received TIMEOUT 
+RM rm-0 sent Prepared
+   Message sent: rm-0;tm;Prepared;0
+   Message sent: rm-3;tm;Prepared;0
+RM rm-3 sent Prepared
+TM received Prepared from rm-0 => [rm-0]
+   Message sent: tm;rm-3;Abort;0
+   Message sent: tm;rm-2;Abort;0
+   Message sent: tm;rm-1;Abort;0
+   Message sent: tm;rm-0;Abort;0
+TM sends Abort
+-- TM  aborted (timeout)
+RM rm-2 received: Abort from tm
+RM rm-3 received: Abort from tm
+-- RM rm-2 shutdown
+RM rm-1 received: Abort from tm
+RM rm-0 received: Abort from tm
+-- RM rm-3 shutdown
+-- RM rm-0 shutdown
+-- RM rm-1 shutdown
+--- Run server ---
+--- Run server ---
+--- Run TM client ---
+--- Run RM clients ---

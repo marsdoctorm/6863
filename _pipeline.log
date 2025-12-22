@@ -1,0 +1,126 @@
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;31mBUILD FAILURE[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  0.049 s
+[[1;34mINFO[m] Finished at: 2025-12-12T11:00:10-05:00
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;31mERROR[m] No goals have been specified for this build. You must specify a valid lifecycle phase or a goal in the format <plugin-prefix>:<goal> or <plugin-group-id>:<plugin-artifact-id>[:<plugin-version>]:<goal>. Available lifecycle phases are: validate, initialize, generate-sources, process-sources, generate-resources, process-resources, compile, process-classes, generate-test-sources, process-test-sources, generate-test-resources, process-test-resources, test-compile, process-test-classes, test, prepare-package, package, pre-integration-test, integration-test, post-integration-test, verify, install, deploy, pre-clean, clean, post-clean, pre-site, site, post-site, site-deploy. -> [1m[Help 1][m
+[[1;31mERROR[m] 
+[[1;31mERROR[m] To see the full stack trace of the errors, re-run Maven with the [1m-e[m switch.
+[[1;31mERROR[m] Re-run Maven using the [1m-X[m switch to enable full debug logging.
+[[1;31mERROR[m] 
+[[1;31mERROR[m] For more information about the errors and possible solutions, please read the following articles:
+[[1;31mERROR[m] [1m[Help 1][m http://cwiki.apache.org/confluence/display/MAVEN/NoGoalSpecifiedException
+RM rm-1 WORKING - 30 ms
+RM rm-0 WORKING - 10 ms
+RM rm-2 WORKING - 50 ms
+RM rm-3 WORKING - 70 ms
+   Message sent: rm-0;tm;Prepared;0
+RM rm-0 sent Prepared
+   Message sent: rm-1;tm;Prepared;0
+RM rm-1 sent Prepared
+-- RM rm-0 received TIMEOUT 
+   Message sent: rm-0;tm;Prepared;0
+RM rm-0 sent Prepared
+-- RM rm-0 received TIMEOUT 
+   Message sent: rm-2;tm;Prepared;0
+   Message sent: rm-0;tm;Prepared;0
+RM rm-0 sent Prepared
+TM received Prepared from rm-0 => [rm-0]
+RM rm-2 sent Prepared
+   Message sent: tm;rm-3;Abort;0
+   Message sent: tm;rm-2;Abort;0
+   Message sent: tm;rm-1;Abort;0
+   Message sent: tm;rm-0;Abort;0
+TM sends Abort
+-- TM  aborted (timeout)
+RM rm-0 received: Abort from tm
+-- RM rm-0 shutdown
+RM rm-1 received: Abort from tm
+RM rm-2 received: Abort from tm
+-- RM rm-1 shutdown
+-- RM rm-2 shutdown
+   Message sent: rm-3;tm;Prepared;0
+RM rm-3 sent Prepared
+RM rm-3 received: Abort from tm
+-- RM rm-3 shutdown
+TLC2 Version 2.20 of Day Month 20?? (rev: bb62e53)
+Running breadth-first search Model-Checking with fp 67 and seed 5747560017303115445 with 1 worker on 32 cores with 3465MB heap and 64MB offheap memory [pid: 1002] (Linux 6.6.87.2-microsoft-standard-WSL2 amd64, Ubuntu 17.0.17 x86_64, MSBDiskFPSet, DiskStateQueue).
+Parsing file /mnt/d/6863formal vertification/TwoPhase/spec/TwoPhaseTrace.tla
+Parsing file /tmp/tlc-13002392135653896893/TLC.tla (jar:file:/opt/tla-nightly/toolbox/tla2tools.jar!/tla2sany/StandardModules/TLC.tla)
+Parsing file /tmp/tlc-13002392135653896893/Sequences.tla (jar:file:/opt/tla-nightly/toolbox/tla2tools.jar!/tla2sany/StandardModules/Sequences.tla)
+Parsing file /tmp/tlc-13002392135653896893/SequencesExt.tla (jar:file:/opt/tla-nightly/toolbox/CommunityModules-deps.jar!/SequencesExt.tla)
+Parsing file /tmp/tlc-13002392135653896893/Naturals.tla (jar:file:/opt/tla-nightly/toolbox/tla2tools.jar!/tla2sany/StandardModules/Naturals.tla)
+Parsing file /tmp/tlc-13002392135653896893/FiniteSets.tla (jar:file:/opt/tla-nightly/toolbox/tla2tools.jar!/tla2sany/StandardModules/FiniteSets.tla)
+Parsing file /tmp/tlc-13002392135653896893/Bags.tla (jar:file:/opt/tla-nightly/toolbox/tla2tools.jar!/tla2sany/StandardModules/Bags.tla)
+Parsing file /tmp/tlc-13002392135653896893/Json.tla (jar:file:/opt/tla-nightly/toolbox/tla2tools.jar!/tla2sany/StandardModules/Json.tla)
+Parsing file /tmp/tlc-13002392135653896893/IOUtils.tla (jar:file:/opt/tla-nightly/toolbox/CommunityModules-deps.jar!/IOUtils.tla)
+Parsing file /mnt/d/6863formal vertification/TwoPhase/spec/TwoPhase.tla
+Parsing file /mnt/d/6863formal vertification/TwoPhase/spec/TVOperators.tla
+Parsing file /mnt/d/6863formal vertification/TwoPhase/spec/TraceSpec.tla
+Parsing file /tmp/tlc-13002392135653896893/_TLCTrace.tla (jar:file:/opt/tla-nightly/toolbox/tla2tools.jar!/tla2sany/StandardModules/_TLCTrace.tla)
+Parsing file /tmp/tlc-13002392135653896893/FiniteSetsExt.tla (jar:file:/opt/tla-nightly/toolbox/CommunityModules-deps.jar!/FiniteSetsExt.tla)
+Parsing file /tmp/tlc-13002392135653896893/Folds.tla (jar:file:/opt/tla-nightly/toolbox/CommunityModules-deps.jar!/Folds.tla)
+Parsing file /tmp/tlc-13002392135653896893/Functions.tla (jar:file:/opt/tla-nightly/toolbox/CommunityModules-deps.jar!/Functions.tla)
+Parsing file /tmp/tlc-13002392135653896893/Integers.tla (jar:file:/opt/tla-nightly/toolbox/tla2tools.jar!/tla2sany/StandardModules/Integers.tla)
+Parsing file /mnt/d/6863formal vertification/TwoPhase/spec/TCommit.tla
+Parsing file /tmp/tlc-13002392135653896893/TLCExt.tla (jar:file:/opt/tla-nightly/toolbox/tla2tools.jar!/tla2sany/StandardModules/TLCExt.tla)
+Semantic processing of module Naturals
+Semantic processing of module Sequences
+Semantic processing of module FiniteSets
+Semantic processing of module TLC
+Semantic processing of module Folds
+Semantic processing of module Functions
+Semantic processing of module FiniteSetsExt
+Semantic processing of module SequencesExt
+Semantic processing of module Bags
+Semantic processing of module Json
+Semantic processing of module Integers
+Semantic processing of module IOUtils
+Semantic processing of module TCommit
+Semantic processing of module TwoPhase
+Semantic processing of module TVOperators
+Semantic processing of module TraceSpec
+Semantic processing of module TLCExt
+Semantic processing of module _TLCTrace
+Semantic processing of module TwoPhaseTrace
+Linting of module Folds
+Linting of module Functions
+Linting of module FiniteSetsExt
+Linting of module SequencesExt
+Linting of module Json
+Linting of module IOUtils
+Linting of module TCommit
+Linting of module TwoPhase
+Linting of module TVOperators
+Linting of module TraceSpec
+Linting of module TLCExt
+Linting of module _TLCTrace
+Linting of module TwoPhaseTrace
+Starting... (2025-12-12 11:00:13)
+Computing initial states...
+Finished computing initial states: 1 distinct state generated at 2025-12-12 11:00:13.
+Progress(10) at 2025-12-12 11:00:13: 11 states generated (11 s/min), 11 distinct states found (11 ds/min), 0 states left on queue.
+Model checking completed. No error has been found.
+  Estimates of the probability that TLC did not check all reachable states
+  because two distinct states had the same fingerprint:
+  calculated (optimistic):  val = 0.0
+11 states generated, 11 distinct states found, 1 states left on queue.
+The depth of the complete state graph search is 11.
+The average outdegree of the complete state graph is 1 (minimum is 1, the maximum 1 and the 95th percentile is 1).
+Finished in 00s at (2025-12-12 11:00:13)
+# Clean up
+Cleanup: ['rm-0.ndjson', 'rm-1.ndjson', 'rm-2.ndjson', 'rm-3.ndjson', 'tm.ndjson']
+# Package.
+
+# Start implementation.
+
+--- Run server ---
+--- Run server ---
+--- Run TM client ---
+--- Run RM clients ---
+# Merge traces.
+
+# Start TLA+ trace spec.
+
